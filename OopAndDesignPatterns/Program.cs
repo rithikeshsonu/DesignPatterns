@@ -86,12 +86,19 @@ foreach (var vehicle in vehicles)
 //Interface Segregation Principle
 //Clients(classes) should not be forced to depend on interfaces they do not use
 //Meaning you segregate Interfaces as you need.
-using OopAndDesignPatterns.SOLIDPrinciples.InterfaceSegregation;
+//using OopAndDesignPatterns.SOLIDPrinciples.InterfaceSegregation;
 
-Circle circle = new Circle();
-circle.Radius = 5.5;
-Console.WriteLine(circle.Area());
-Sphere sphere = new Sphere();
-sphere.Radius = 4.5;
-sphere.Area();
-sphere.Volume();
+//Circle circle = new Circle();
+//circle.Radius = 5.5;
+//Console.WriteLine(circle.Area());
+//Sphere sphere = new Sphere();
+//sphere.Radius = 4.5;
+//sphere.Area();
+//sphere.Volume();
+
+//Dependency Inversion Principle
+//High level modules should not depend on low level modules. Both should depend on Abstractions
+//Components rely on Abstractions rather than concrete Imlementations(Classes)
+using OopAndDesignPatterns.SOLIDPrinciples.DependencyInversion;
+Car car = new(new Engine()); //This is dependency Injection
+car.StartCar();
