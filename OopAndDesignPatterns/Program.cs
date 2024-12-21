@@ -1,6 +1,7 @@
 ﻿//using OopAndDesignPatterns.OOPPrinciples.Inheritance;
 //using OopAndDesignPatterns.OOPPrinciples.Polymorphism;
-using OopAndDesignPatterns.SOLIDPrinciples.OpenClosed;
+using OopAndDesignPatterns.SOLIDPrinciples.LiskovSubstitution;
+//using OopAndDesignPatterns.SOLIDPrinciples.OpenClosed;
 
 ////Inheritance
 //Console.WriteLine("Inheritance");
@@ -56,15 +57,28 @@ foreach (var vehicle in vehicles)
 
 //Open Closed Principle
 //Software entities - Functions/Modules/classes should be open for extension but closed for modification
-Shape shape = new();
-shape.Length = 10;
-shape.Width = 20;
-shape.Radius = 5;
-shape.ShapeType = ShapeType.Circle;
-shape.ShapeType = ShapeType.Rectangle;
+//Shape shape = new();
+//shape.Length = 10;
+//shape.Width = 20;
+//shape.Radius = 5;
+//shape.ShapeType = ShapeType.Circle;
+//shape.ShapeType = ShapeType.Rectangle;
 
-var res = shape.CalculateArea();
-Console.WriteLine(res);
+//var res = shape.CalculateArea();
+//Console.WriteLine(res);
 
 //Liskov Substitution Principle
 //Objects of sub class should be able to substitute objects of superclass without affecting the correctness of the program
+Shape rectangle = new Rectangle()
+{
+    Height = 10,
+    Width = 8,
+};
+Console.WriteLine($"Calculated Area of rectangle: {rectangle.Area}");
+
+Shape square = new Square() 
+{
+    SideLength = 5 
+};
+
+Console.WriteLine($"calculated area of square: {square.Area}");
