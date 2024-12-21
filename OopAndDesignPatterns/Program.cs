@@ -1,6 +1,6 @@
 ﻿//using OopAndDesignPatterns.OOPPrinciples.Inheritance;
 //using OopAndDesignPatterns.OOPPrinciples.Polymorphism;
-using OopAndDesignPatterns.SOLIDPrinciples.LiskovSubstitution;
+//using OopAndDesignPatterns.SOLIDPrinciples.LiskovSubstitution;
 //using OopAndDesignPatterns.SOLIDPrinciples.OpenClosed;
 
 ////Inheritance
@@ -69,16 +69,29 @@ foreach (var vehicle in vehicles)
 
 //Liskov Substitution Principle
 //Objects of sub class should be able to substitute objects of superclass without affecting the correctness of the program
-Shape rectangle = new Rectangle()
-{
-    Height = 10,
-    Width = 8,
-};
-Console.WriteLine($"Calculated Area of rectangle: {rectangle.Area}");
+//Shape rectangle = new Rectangle()
+//{
+//    Height = 10,
+//    Width = 8,
+//};
+//Console.WriteLine($"Calculated Area of rectangle: {rectangle.Area}");
 
-Shape square = new Square() 
-{
-    SideLength = 5 
-};
+//Shape square = new Square() 
+//{
+//    SideLength = 5 
+//};
 
-Console.WriteLine($"calculated area of square: {square.Area}");
+//Console.WriteLine($"calculated area of square: {square.Area}");
+
+//Interface Segregation Principle
+//Clients(classes) should not be forced to depend on interfaces they do not use
+//Meaning you segregate Interfaces as you need.
+using OopAndDesignPatterns.SOLIDPrinciples.InterfaceSegregation;
+
+Circle circle = new Circle();
+circle.Radius = 5.5;
+Console.WriteLine(circle.Area());
+Sphere sphere = new Sphere();
+sphere.Radius = 4.5;
+sphere.Area();
+sphere.Volume();
