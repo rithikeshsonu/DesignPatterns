@@ -99,6 +99,31 @@ foreach (var vehicle in vehicles)
 //Dependency Inversion Principle
 //High level modules should not depend on low level modules. Both should depend on Abstractions
 //Components rely on Abstractions rather than concrete Imlementations(Classes)
-using OopAndDesignPatterns.SOLIDPrinciples.DependencyInversion;
-Car car = new(new Engine()); //This is dependency Injection
-car.StartCar();
+//using OopAndDesignPatterns.SOLIDPrinciples.DependencyInversion;
+//Car car = new(new Engine()); //This is dependency Injection
+//car.StartCar();
+
+
+//Design Patterns:
+//Behavioral Design Patterns:
+//Observer Design Pattern.
+//The observer design pattern involves an ovbect known as the subject maintainaing a list of its dependent objects, known as observers and notifying them aiutomatically when the state changes.
+using OopAndDesignPatterns.DesignPatterns.Behavioral.Observer;
+
+School school1 = new("School1");
+School school2 = new("School1");
+User user1 = new("User1");
+User user2 = new("User2");
+
+NewsAgency newsAgency = new();
+newsAgency.RegisterObserver(user1);
+newsAgency.RegisterObserver(school1);
+newsAgency.NotifyObservers("News 1");
+Console.WriteLine();
+newsAgency.RegisterObserver(user2);
+newsAgency.RegisterObserver(school2);
+newsAgency.NotifyObservers("News 2");
+Console.WriteLine();
+newsAgency.UnregisterObserver(user1);
+newsAgency.UnregisterObserver(school2);
+newsAgency.NotifyObservers("News3");
