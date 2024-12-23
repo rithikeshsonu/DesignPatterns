@@ -108,22 +108,29 @@ foreach (var vehicle in vehicles)
 //Behavioral Design Patterns:
 //Observer Design Pattern.
 //The observer design pattern involves an ovbect known as the subject maintainaing a list of its dependent objects, known as observers and notifying them aiutomatically when the state changes.
-using OopAndDesignPatterns.DesignPatterns.Behavioral.Observer;
+//using OopAndDesignPatterns.DesignPatterns.Behavioral.Observer;
 
-School school1 = new("School1");
-School school2 = new("School1");
-User user1 = new("User1");
-User user2 = new("User2");
+//School school1 = new("School1");
+//School school2 = new("School1");
+//User user1 = new("User1");
+//User user2 = new("User2");
 
-NewsAgency newsAgency = new();
-newsAgency.RegisterObserver(user1);
-newsAgency.RegisterObserver(school1);
-newsAgency.NotifyObservers("News 1");
-Console.WriteLine();
-newsAgency.RegisterObserver(user2);
-newsAgency.RegisterObserver(school2);
-newsAgency.NotifyObservers("News 2");
-Console.WriteLine();
-newsAgency.UnregisterObserver(user1);
-newsAgency.UnregisterObserver(school2);
-newsAgency.NotifyObservers("News3");
+//NewsAgency newsAgency = new();
+//newsAgency.RegisterObserver(user1);
+//newsAgency.RegisterObserver(school1);
+//newsAgency.NotifyObservers("News 1");
+//Console.WriteLine();
+//newsAgency.RegisterObserver(user2);
+//newsAgency.RegisterObserver(school2);
+//newsAgency.NotifyObservers("News 2");
+//Console.WriteLine();
+//newsAgency.UnregisterObserver(user1);
+//newsAgency.UnregisterObserver(school2);
+//newsAgency.NotifyObservers("News3");
+
+//Factory method Pattern
+//Create objects without exposing the creation logic to the client and refer to newly created object using a common interface
+using OopAndDesignPatterns.DesignPatterns.Creational.FactoryMethod;
+//This vastly supports OCP AND SRP, Where you can go ahead and add many more payment methods
+IPayment payment = PaymentFactory.create(PaymentMethod.GooglePay); //Returns the instance of the class which can be used next -> Also RunTime polymorphism
+payment.Pay(1000);
