@@ -23,6 +23,7 @@ This repository includes the **Object-Oriented Principles**, **SOLID Design Prin
 5. **Dependency Inversion Principle**  
    High-level modules should not depend on low-level modules. Both should depend on abstractions.
 
+
 ---
 
 ## Design Patterns
