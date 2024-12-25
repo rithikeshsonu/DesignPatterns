@@ -75,5 +75,6 @@ The **Observer Pattern** involves an object, known as the _subject_, maintaining
 - **P**rototype Pattern  
 - **S**ingleton Pattern  
 - **F**actory Method Pattern  
-- **A**bstract Factory Pattern  
+- **A**bstract Factory Pattern
+- [**A**bstract Factory Pattern](https://github.com/rithikeshsonu/DesignPatterns/tree/main/OopAndDesignPatterns/DesignPatterns/Creational/AbstractFactory)
 - **B**uilder Pattern  
