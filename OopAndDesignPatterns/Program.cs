@@ -130,7 +130,30 @@ foreach (var vehicle in vehicles)
 
 //Factory method Pattern
 //Create objects without exposing the creation logic to the client and refer to newly created object using a common interface
-using OopAndDesignPatterns.DesignPatterns.Creational.FactoryMethod;
-//This vastly supports OCP AND SRP, Where you can go ahead and add many more payment methods
-IPayment payment = PaymentFactory.create(PaymentMethod.GooglePay); //Returns the instance of the class which can be used next -> Also RunTime polymorphism
-payment.Pay(1000);
+//using OopAndDesignPatterns.DesignPatterns.Creational.FactoryMethod;
+////This vastly supports OCP AND SRP, Where you can go ahead and add many more payment methods
+//IPayment payment = PaymentFactory.create(PaymentMethod.GooglePay); //Returns the instance of the class which can be used next -> Also RunTime polymorphism
+//payment.Pay(1000);
+
+
+//Abstract Factory Pattern
+//Factory of Factories
+
+using OopAndDesignPatterns.DesignPatterns.Creational.AbstractFactory;
+//Before using Provider
+//IInternationalFactory factory = new EnglandFactory(); 
+//ILanguage language = factory.CreateLanguage();
+//ICapitalCity capital = factory.CreateCapital();
+//language.Greet();
+//Console.WriteLine($"Total population: {capital.GetPopulation()}");
+//Console.WriteLine($"Top Attractions:{string.Join(", ", capital.ListTopAttractions())}");
+
+//After using Provider -> 
+Country country = Country.England;
+ILanguage language = InternationalProvider.CreateLanguage(country);
+ICapitalCity capital = InternationalProvider.CreateCapital(country);
+Console.WriteLine($"{country}");
+Console.WriteLine(capital.GetType().Name);
+language.Greet();
+Console.WriteLine($"Total population: {capital.GetPopulation()}");
+Console.WriteLine($"Top Attractions:{string.Join(", ", capital.ListTopAttractions())}");
