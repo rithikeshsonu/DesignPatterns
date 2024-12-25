@@ -8,9 +8,6 @@ This project demonstrates the **Abstract Factory Pattern** through an example of
 - [UML Diagram](#uml-diagram)
 - [Features](#features)
 - [Structure](#structure)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
