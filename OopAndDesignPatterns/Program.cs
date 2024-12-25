@@ -139,7 +139,7 @@ foreach (var vehicle in vehicles)
 //Abstract Factory Pattern
 //Factory of Factories
 
-using OopAndDesignPatterns.DesignPatterns.Creational.AbstractFactory;
+//using OopAndDesignPatterns.DesignPatterns.Creational.AbstractFactory;
 //Before using Provider
 //IInternationalFactory factory = new EnglandFactory(); 
 //ILanguage language = factory.CreateLanguage();
@@ -149,11 +149,21 @@ using OopAndDesignPatterns.DesignPatterns.Creational.AbstractFactory;
 //Console.WriteLine($"Top Attractions:{string.Join(", ", capital.ListTopAttractions())}");
 
 //After using Provider -> 
-Country country = Country.England;
-ILanguage language = InternationalProvider.CreateLanguage(country);
-ICapitalCity capital = InternationalProvider.CreateCapital(country);
-Console.WriteLine($"{country}");
-Console.WriteLine(capital.GetType().Name);
-language.Greet();
-Console.WriteLine($"Total population: {capital.GetPopulation()}");
-Console.WriteLine($"Top Attractions:{string.Join(", ", capital.ListTopAttractions())}");
+//Country country = Country.England;
+//ILanguage language = InternationalProvider.CreateLanguage(country);
+//ICapitalCity capital = InternationalProvider.CreateCapital(country);
+//Console.WriteLine($"{country}");
+//Console.WriteLine(capital.GetType().Name);
+//language.Greet();
+//Console.WriteLine($"Total population: {capital.GetPopulation()}");
+//Console.WriteLine($"Top Attractions:{string.Join(", ", capital.ListTopAttractions())}");
+
+//Singleton Pattern
+//The singleton pattern is great for storing app configuration settings, logging info, session info, authentication tokens and making its information available globally via a single instance, ensuring that it is the same throughout the app. (For eg: GetTenantDetails())
+using OopAndDesignPatterns.DesignPatterns.Creational.Singleton;
+
+var settings = AppSettings.GetInstance();
+settings.Set("app_name", "DesignPatternsMastery");
+settings.Set("app_creator", "Rithikesh");
+Console.WriteLine(settings.Get("app_name"));
+Test.Run();
