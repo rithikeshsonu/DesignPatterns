@@ -1,6 +1,5 @@
 # Design Patterns
 
-
 This repository includes the **Object-Oriented Principles**, **SOLID Design Principles**, and **Design Patterns**.
 
 ---
