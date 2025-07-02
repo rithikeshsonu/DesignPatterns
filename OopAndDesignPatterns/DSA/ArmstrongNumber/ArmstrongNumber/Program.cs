@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 void IsArmstrongNumber(int num)
 {
@@ -348,3 +349,123 @@ string RemoveWhiteSpaces(string str)
     return sb.ToString();
 }
 Console.WriteLine(RemoveWhiteSpaces("  A B\tC\nD E "));
+
+//✅ Question #13: Find the Most Frequent Character in a String
+//Input: "hello"
+//Output: 'l'(appears 2 times)
+
+//Input: "aabbbbcc"
+//Output: 'b'
+
+//Input: "xyz"
+//Output: any of 'x', 'y', or 'z' (all equal freq)
+
+//💡 Idea:
+//Loop through each character
+
+//For each one, count how many times it occurs (by scanning full string again)
+
+//Track the max
+
+char MostFequeuentCharNaive(string str) //aabc
+{
+    char maxChar = '\0';
+    int maxCount = 0;
+    for(int i = 0; i < str.Length; i++)
+    {
+        char current = str[i]; 
+        int count = 0;
+        for(int j = 0; j < str.Length; j++)
+        {
+            if(current == str[j])
+                count++;
+        }
+        if(count > maxCount)
+        {
+            maxChar = current;
+            maxCount = count;
+        }
+    }
+    return maxChar;
+}
+Console.WriteLine(MostFequeuentCharNaive("aabbbbcc"));
+
+char MostFrequentCharOptimal(string str) //"aabbbbcc"
+{
+    if (string.IsNullOrEmpty(str)) 
+        return '\0';
+    Dictionary<char, int> freq = new();
+    foreach (char c in str)
+    {
+        if (freq.ContainsKey(c))
+            freq[c]++;
+        else
+            freq[c] = 1;
+    }
+    char maxChar = '\0';
+    int maxCount = 0;
+    foreach(var pair in freq)
+    {
+        if(pair.Value > maxCount)
+        {
+            maxChar = pair.Key; 
+            maxCount = pair.Value;
+        }
+    }
+    return maxChar;
+}
+
+Console.WriteLine(MostFrequentCharOptimal("aabbbbccc"));
+
+List<List<string>> GroupAnagramsNaive(string[] words) //["eat", "tea", "tan", "ate", "nat", "bat"] 
+{
+    bool[] visited = new bool[words.Length];
+    var result = new List<List<string>>();
+    for(int i = 0; i < words.Length; i++)
+    {
+        if (visited[i]) continue;
+        var group = new List<string>() { words[i] };
+        visited[i] = true;
+        for(int j = i + 1; j < words.Length; j++)
+        {
+            if (!visited[j] && IsAnagramChecker(words[i], words[j]))
+            {
+                group.Add(words[j]);
+                visited[j] = true;
+            }
+        }
+        result.Add(group);
+    }
+    return result;
+}
+Console.WriteLine(GroupAnagramsNaive(["eat", "tea", "tan", "ate", "nat", "bat"]));
+
+bool AreStringsPermutationsNaive(string s1, string s2) //abc, bca
+{
+    if(s1.Length != s2.Length) return false;
+    char[] c1 = s1.ToCharArray();
+    char[] c2 = s2.ToCharArray();
+    Array.Sort(c1);
+    Array.Sort(c2);
+    for(int i = 0;i < c1.Length; i++)
+    {
+        if (c1[i] != c2[i]) return false;
+    }
+    return true;
+}
+Console.WriteLine(AreStringsPermutationsNaive("abc", "bca"));
+
+bool AreStringsPermutationsOptimal(string s1, string s2)
+{
+    if(s1.Length != s2.Length) return false;
+    int[] freq = new int[256];//Hash Array //ASCII
+    foreach (char c in s1)
+        freq[c]++;
+    foreach(char c in s2)
+    {
+        freq[c]--;
+        if (freq[c] < 0) return false;
+    }
+    return true;
+}
+Console.WriteLine(AreStringsPermutationsOptimal("abcg", "bcat"));
