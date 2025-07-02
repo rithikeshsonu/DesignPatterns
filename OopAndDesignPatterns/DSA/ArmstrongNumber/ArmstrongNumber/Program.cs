@@ -1,4 +1,9 @@
-﻿void IsArmstrongNumber(int num)
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.RegularExpressions;
+
+void IsArmstrongNumber(int num)
 {
     int temp, rem;
     double sum = 0;
@@ -20,8 +25,7 @@
 }
 IsArmstrongNumber(153);
 
-
-void IsPalindrome(int num) //121
+void IsNumberPalindrome(int num) //121
 {
     int temp = num, rem;
     int revNum = 0;
@@ -40,7 +44,7 @@ void IsPalindrome(int num) //121
         Console.WriteLine("No");
     }
 }
-IsPalindrome(121);
+IsNumberPalindrome(121);
 
 string ReverseString(string input) //Convert string to char array
 {
@@ -62,6 +66,7 @@ string ReverseStringg(string str) //Recursion
 }
 Console.WriteLine(ReverseStringg("qwerty"));
 
+//✅ Question #11: Check if a String is a Palindrome
 bool IsStringPalindrome(string input) //Fetch indices(left and right) 0, 4
 {
     int left = 0, right = input.Length - 1;
@@ -101,9 +106,12 @@ bool IsAnagramCheckerOptimal(string s1, string s2)
         {
             frequency[c]++;
         }
-        frequency[c] = 1; //initialize each char to 1
+        else
+        {
+            frequency[c] = 1; //initialize each char to 1
+        }
     }
-    foreach(char c in s2)
+    foreach(char c in s2) //Now that we have frequency array. Subtract each char's count if found in s2.
     {
         if (!frequency.ContainsKey(c))
             return false;
@@ -112,4 +120,231 @@ bool IsAnagramCheckerOptimal(string s1, string s2)
     }
     return true;
 }
-IsAnagramCheckerOptimal("triangle", "integral");
+Console.WriteLine(IsAnagramCheckerOptimal("akak", "kaaa"));
+
+string RemoveDuplicatesNaive(string str)
+{
+    string result = ""; //O(n) Space complexity
+    foreach(char c in str)
+    {
+        if (!result.Contains(c)) //O(n^2) Time complexity as the char is scanned in whole result string
+        {
+            result += c;
+        }
+    }
+    return result;
+}
+Console.WriteLine(RemoveDuplicatesNaive("programming"));
+
+string RemoveDuplicatesOptimal(string str)
+{
+    HashSet<char> seen = new(); //Add each character to hashset if the character is not present in hashset.
+    StringBuilder sb = new(); //O(n) Space complexity
+    foreach(char c in str) 
+    {
+        if (!seen.Contains(c)) //O(n) TC 
+        {
+            seen.Add(c);
+            sb.Append(c);
+        }
+        //seen.Add(c);  //Even if you add this line, the character will not go inside hashset because hashset only contains unique chars
+    }
+    return sb.ToString();
+}
+Console.WriteLine(RemoveDuplicatesOptimal("programming"));
+
+char FirstNonRepeatingNaive(string str) //aabcc
+{
+    for(int i = 0; i < str.Length; i++) //For each character loop through whole string and count the occurences of char.
+    {
+        int count = 0;
+        for(int j = 0; j < str.Length; j++) //O(n^2) Time complexity
+        {
+            if (str[i] == str[j])
+            {
+                count++;
+            }
+        }
+        if(count == 1)
+        {
+            return str[i];
+        }
+    }
+    return '\0';
+}
+Console.WriteLine(FirstNonRepeatingNaive("aabbcc"));
+
+char FirstNonRepeatingOptimal(string str) //Total Time complexity -> O(n) + O(n) = O(2n) 
+{
+    Dictionary<char, int> freq = new(); //Build a frequency dictionary with counts of each char
+    foreach(char c in str) //O9n) time complexity to build a frequency array
+    {
+        if (freq.ContainsKey(c))
+        {
+            freq[c]++;
+        }
+        else
+        {
+            freq[c] = 1;
+        }
+    } //Now we have count of each char in key value pairs
+    foreach(char c in str) //O(n) Time complexity to check in whole string 
+    {
+        if (freq[c] == 1)
+            return c;
+    }
+    return '\0';
+}
+
+Console.WriteLine(FirstNonRepeatingOptimal("aabcc"));
+
+
+//✅ Check if Two Strings Are Rotations of Each Other
+bool IsRotationNaive(string s1, string s2) //abcd, cdab
+{
+    if (s1.Length != s2.Length)
+        return false;
+    for(int i = 0; i < s1.Length; i++)
+    {
+        string rotated = s1.Substring(i) + s1.Substring(0, i); //First iteration string rotated = "abcd", second iteration - rotated = "bcd" + "a" third iteration rotated = "cd" + "ab"
+        if(rotated == s2) return true;
+    }
+    return false;
+}
+Console.WriteLine(IsRotationNaive("abcd", "cdab"));
+
+bool IsRotationOptimal(string s1, string s2) //abcd, cdab  -> If s2 is a rotation of s1, then it will always be a substring of s1 + s1 cdab will be present in //abcdabcd
+{
+    if(s1.Length != s2.Length) return false;
+    string concatenated = s1 + s1;
+    return concatenated.Contains(s2);
+}
+
+Console.WriteLine(IsRotationOptimal("abcd", "cdab"));
+
+void CountVowelsAndConsonentsNaive(string str) //program
+{
+    int vowels = 0, consonants = 0;
+    foreach(char c in str.ToLowerInvariant())
+    {
+        if (char.IsLetter(c))
+        {
+            if("aeiou".Contains(c))
+                vowels++;
+            else 
+                consonants++;
+        }
+    }
+    Console.WriteLine($"Vowels count: {vowels}");
+    Console.WriteLine($"Consonants count: {consonants}");
+}
+CountVowelsAndConsonentsNaive("program");
+
+//✅ Find the Longest Word in a Sentence
+
+string FindLongestWordNaive(string sentence)
+{
+    string[] words = sentence.Split(' ');
+    string longest = "";
+    foreach(string word in words)
+    {
+        if (word.Length > longest.Length)
+        {
+            longest = word;   
+        }
+    }
+    return longest;
+}
+Console.WriteLine(FindLongestWordNaive("The quick brown fox jumps over the lazy dog"));
+
+string FindLongestWordClean(string sentence) //Remove special chars, punctuations, etc.,
+{
+    string[] words = sentence.Split(' ');
+    string longest = "";
+    foreach(string word in words)
+    {
+        string cleaned = Regex.Replace(word, @"^\W+|\W+$", ""); //Remove special chars, punctuations, etc.,
+        if(cleaned.Length > longest.Length)
+        {
+            longest = cleaned;
+        }
+    }
+    return longest;
+}
+Console.WriteLine(FindLongestWordClean("The quick, brown fox! jumped over the lazy... dog."));
+
+int StrStrNaive(string haystack, string needle) //"hello", "ll"
+{
+    if (needle == "")
+        return 0;
+    for(int i = 0; i <= haystack.Length - needle.Length; i++) //0 to 3 indices
+    {
+        int j = 0; 
+        while(j < needle.Length && haystack[i+j] == needle[j]) //First check 'l' from ll exists in "hello". then check second 'l' from 'll' in 'hello'
+        {
+            j++;
+        }
+        if(j == needle.Length) return i;
+    }
+    return -1;
+}
+Console.WriteLine(StrStrNaive("hello", "ll"));
+
+//Given a string, compress it using the counts of repeated characters.
+//Return the compressed string only if it is shorter than the original. Otherwise, return the original.
+string CompressString(string str) //aabbbccddd -> a2b3c2d3
+{
+    if (string.IsNullOrEmpty(str))
+        return str;
+    StringBuilder compressed = new();
+    int count = 1;
+    for(int i = 1; i < str.Length; i++)
+    {
+        if (str[i] == str[i - 1])
+            count++;
+        else
+        {
+            compressed.Append(str[i-1]);
+            compressed.Append(count);
+            count = 1;
+        }
+    }
+    compressed.Append(str[str.Length-1]);
+    compressed.Append(count);
+    string result = compressed.ToString();
+    return result.Length < str.Length ? result : str;
+}
+
+Console.WriteLine(CompressString("aabbbccccdda"));
+
+
+//✅ Question #12: Remove All Whitespaces from a String
+//Input: "  Hello   World  "
+//Output: "HelloWorld"
+
+//Input: "  A B\tC\nD E "
+//Output: "ABCDE"
+//💡 Idea:
+//Loop through each character in the string
+
+//Use char.IsWhiteSpace() to detect and skip whitespace
+
+//Build a new string without them
+
+string RemoveWhiteSpaces(string str)
+{
+    StringBuilder sb = new();
+    foreach(char c in str)
+    {
+        if (char.IsWhiteSpace(c))
+        {
+            continue;
+        }
+        else
+        {
+            sb.Append(c);
+        }
+    }
+    return sb.ToString();
+}
+Console.WriteLine(RemoveWhiteSpaces("  A B\tC\nD E "));
