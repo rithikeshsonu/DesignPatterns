@@ -97,13 +97,98 @@ Console.WriteLine(LinearSearch([3, 6, 1, 4, 9], 4));
 bool BinarySearch(int[] arr, int x) //Sorted Array 1, 2, 3, 4, 5; x = 4
 {
     int left = 0; int right = arr.Length - 1;
-    while (left < right)
+    while (left <= right)
     {
         int mid = (left + right) / 2;
         if (arr[mid] == x) return true;
-        if (arr[mid] > x) right = mid - 1;
+        else if (arr[mid] > x) right = mid - 1;
         else if (arr[mid] < x) left = mid + 1;
     }
     return false;
 }
-Console.WriteLine(BinarySearch([1, 2, 3, 4, 5], 2));
+Console.WriteLine(BinarySearch([1, 2, 3, 4, 5], 4));
+
+//✅ Question 7: Count Frequency of Each Element
+void CountFrequencyNaive(int[] arr) //1 , 2 , 2, 3, 3, 4
+{
+    for(int i = 0;i < arr.Length;i++)
+    {
+        int count = 0;
+        for(int j = 0; j < arr.Length; j++)
+        {
+            if (arr[j] == arr[i]) count++;
+        }
+        Console.WriteLine($"{arr[i]} appears {count} times");
+    }
+}
+CountFrequencyNaive([1, 2, 2, 3, 3, 4]);
+
+void CountFrequencyOptimal(int[] arr)
+{
+    Dictionary<int, int> freq = new();
+    foreach(int num in arr)
+    {
+        if(freq.ContainsKey(num)) freq[num]++;
+        else freq[num] = 1;
+    }
+    foreach(var kv  in freq)
+    {
+        Console.WriteLine($"{kv.Key} appears {kv.Value} times");
+    }
+}
+CountFrequencyOptimal([1, 2, 3, 3, 4, 4]);
+
+int FirstRepeating(int[] arr) //Add items to frequency - O(N) -> Search in frequency -> O(n) -> TOtal - O(n) + O(n) 
+{
+    Dictionary<int, int> freq = new();
+    foreach(var num in arr)
+    {
+        if(freq.ContainsKey(num)) freq[num]++;
+        else freq[num] = 1;
+    }
+    foreach (var kv in freq)
+    {
+        if (kv.Value > 1) return kv.Key;
+    }
+    return 0;
+}
+Console.WriteLine(FirstRepeating([1, 2, 3, 3, 4, 4, 5, 5, 6]));
+
+int FirstRepeatingUsingHashset(int[] arr) //Just wow - Add items to hashset if doesn't exist. And keep adding until the element is not found. Worst case - O(n)
+{
+    HashSet<int> seen = new();
+    for(int i = 0; i < arr.Length; i++)
+    {
+        if (seen.Contains(arr[i])) return arr[i];
+        else seen.Add(arr[i]);
+    }
+    return -1;
+}
+Console.WriteLine(FirstRepeatingUsingHashset([1, 2, 3, 3, 4, 4, 5]));
+
+//✅ Question 9: Find the First Non-Repeating Element
+int FirstNonRepeatingNumberOptimal(int[] arr) // 1, 1, 2, 3, 4
+{
+    Dictionary<int, int> freq = new();
+    foreach(var num in arr)
+    {
+        if (freq.ContainsKey(num)) freq[num]++;
+        else freq[num] = 1;
+    }
+    foreach(var kv in freq)
+    {
+        if (kv.Value == 1) return kv.Key;
+    }
+    return -1;
+}
+Console.WriteLine(FirstNonRepeatingNumberOptimal([1, 1, 2, 2, 3, 3, 4]));
+
+//✅ Question 10: Find the Largest Three Elements in Array
+int[] FindLargestThree(int[] arr)
+{
+    var unique = arr.Distinct().ToArray();
+    Array.Sort(unique);
+    int n = unique.Length;
+    return new int[] { unique[n-1], unique[n - 2], unique[n - 3] };
+}
+Console.WriteLine(FindLargestThree([3, 4, 1, 10, 12]));
