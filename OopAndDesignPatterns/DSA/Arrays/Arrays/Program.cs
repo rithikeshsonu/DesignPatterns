@@ -192,3 +192,83 @@ int[] FindLargestThree(int[] arr)
     return new int[] { unique[n-1], unique[n - 2], unique[n - 3] };
 }
 Console.WriteLine(FindLargestThree([3, 4, 1, 10, 12]));
+
+int RemoveDuplicatesNaive(int[] arr) 
+{
+    List<int> unique = new();
+    foreach(var item in arr)
+    {
+        if(!unique.Contains(item))
+            unique.Add(item);
+    }
+    for (int i = 0; i < unique.Count; i++)
+        arr[i] = unique[i];
+    return unique.Count;
+}
+
+Console.WriteLine(RemoveDuplicatesNaive([1, 2, 2, 3, 3, 4])); 
+
+int RemoveDuplicatesOptimal(int[] arr) // 1, 2, 2, 3, 3, 4 -> Two Pointers approach
+{
+    if (arr.Length == 0) return 0;
+    int i = 0;
+    for(int j = 1; j < arr.Length; j++)
+    {
+        if (arr[j] != arr[i])
+        {
+            i++;
+            arr[i] =arr[j];
+        }
+    }
+    return i + 1;
+}
+Console.WriteLine(RemoveDuplicatesOptimal([1, 2, 2, 3, 3, 4, 4, 4, 5]));
+
+void LeftRotateByOne(int[] arr)
+{
+    int temp = arr[0];
+    for(int i = 0; i < arr.Length - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    arr[arr.Length - 1] = temp;
+    Console.WriteLine(arr);
+}
+LeftRotateByOne([1, 2, 3, 4, 5]);
+
+
+//✅ Question 13: Left Rotate Array by D Positions
+
+void LeftRotateByDPositionsNaive(int[] arr, int d)
+{
+    for(int i = 0; i < d; i++)
+    {
+        LeftRotateByOne(arr); 
+    }
+    Console.WriteLine(arr);
+}
+LeftRotateByDPositionsNaive([1, 2, 3, 4, 5], 3);
+
+//⚡ Optimal Approach(Reverse Method):
+//Reverse first D elements.
+//Reverse remaining n-D elements.
+//Reverse the entire array.
+void Reverse(int[] arr, int start, int end)
+{
+    while (start < end)
+    {
+        (arr[start], arr[end]) = (arr[end], arr[start]);
+        start++; end--;
+    }
+}
+
+void LeftRotateByDOptimal(int[] arr, int d)
+{
+    int n = arr.Length;
+    d %= n;
+
+    Reverse(arr, 0, d - 1);
+    Reverse(arr, d, n - 1);
+    Reverse(arr, 0, n - 1);
+}
+LeftRotateByDOptimal([1, 2, 3, 4, 5], 3);
