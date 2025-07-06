@@ -118,4 +118,39 @@ var flat = nested.SelectMany(x => x).ToList();
 
 //✅ Level 5: Miscellaneous & Tricky(41–50)
 
-var res = 10;
+//41.Reverse a list using LINQ.
+var reverse = numbers.Reverse().ToList();
+
+//42.Convert a list to dictionary (Id → Name).
+var dict = students.ToDictionary(x => x.Id, x => x.Name);
+
+
+//43.Get element at index 2 safely.
+var elementAtSecondIndex = numbers.Skip(2).FirstOrDefault();
+
+//44.Get frequency of each number.
+var frequency = numbers.GroupBy(x => x).Select(
+    g => new 
+    {
+        Number = g.Key, 
+        Count = g.Count()
+    }).ToList();
+
+//45.Compare two lists for equality.
+var areListsEqual = list1.OrderBy(x => x).SequenceEqual(list2.OrderBy(x => x));
+
+//46.Find duplicates in a list.
+var duplicatesInList = numbers.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
+
+//47.Find the longest word.
+
+var longestWord = words.OrderByDescending(x => x.Length).FirstOrDefault();
+
+//48. Get distinct characters in a word list.
+var distinctChars = words.SelectMany(x => x).Distinct().ToList();
+
+//49.Group numbers by even and odd.
+var groupNumbersByOddAndEven = numbers.GroupBy(x => x % 2 == 0 ? "Even" : "Odd").ToList();
+
+//50.Convert list of strings to comma-separated string.
+string csv = string.Join(',' , words);
