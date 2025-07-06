@@ -1,11 +1,4 @@
-﻿
-
-
-using LINQ;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Xml.Linq;
+﻿using LINQ;
 
 int[] numbers = [1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 9, 10];
 var evens = numbers.Where(x => x % 2 == 0).ToList();
@@ -154,3 +147,21 @@ var groupNumbersByOddAndEven = numbers.GroupBy(x => x % 2 == 0 ? "Even" : "Odd")
 
 //50.Convert list of strings to comma-separated string.
 string csv = string.Join(',' , words);
+
+
+//🔍 Scenario - Based LINQ Interview Questions
+
+//1.Find employees who have not submitted timesheets
+List<int> allEmployees = new() { 1, 2, 3, 4, 5 };
+List<int> submittedEmployees = new() { 2, 4, 5 };
+
+List<int> notSubmittedEmployees = allEmployees.Except(submittedEmployees).ToList();
+
+//🔸 3.Find duplicate names in a list of strings
+List<string> names = new() { "John", "Jane", "John", "Alex", "Alex" };
+var duplicateNames = names.GroupBy(n => n)
+                            .Where(g => g.Count() > 1)
+                            .Select(x => x.Key)
+                            .ToList();
+
+var res = 2;
