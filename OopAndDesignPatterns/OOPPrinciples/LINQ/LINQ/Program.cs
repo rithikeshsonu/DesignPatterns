@@ -2,7 +2,10 @@
 
 
 using LINQ;
+using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Xml.Linq;
 
 int[] numbers = [1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 9, 10];
 var evens = numbers.Where(x => x % 2 == 0).ToList();
@@ -67,3 +70,52 @@ var studentNamesInUpperCase = students.Select(x =>  x.Name.ToUpperInvariant()).T
 
 //30.Get distinct marks.
 var distinctMarks = students.Select(x => x.Marks).Distinct();
+
+//✅ Level 4: Advanced Scenarios(31–40)
+//31.Get top 3 students.
+var top3Students = students.OrderByDescending(x => x.Marks).Take(3).ToList();
+
+//32.Get second highest scorer.
+var secondHighestScorer = students.OrderByDescending(x => x.Marks).Skip(1).FirstOrDefault();
+
+List<ClassInfo> classes = new()
+{
+    new ClassInfo { StudentId = 1, ClassName = "A" },
+    new ClassInfo { StudentId = 2, ClassName = "B" },
+    new ClassInfo { StudentId = 4, ClassName = "C" }
+};
+
+//33.Join students and classes.
+var joinStudentsAndClasses = students.Join(classes,
+    s => s.Id,
+    d => d.StudentId,
+    (s, d) => new { s.Name, d.ClassName }).ToList();
+
+//34.Group students by first letter of name.
+var groupStudentsByFirstLetterOfName = students.GroupBy(x => x.Name[0]);
+
+//35.Select ANONYMOUS TYPE: name and grade.
+var result = students.Select(x => new
+{
+    x.Name,
+    Grade = x.Marks >= 60 ? "Pass" : "Fail"
+});
+//36.Get last student alphabetically.
+
+var lastStudentAlphabetically = students.OrderByDescending(x => x.Name).FirstOrDefault();
+//37.Find if a student named "John" exists.
+var checkIfNameExists = students.Any(x => x.Name == "John");
+
+//38.Find index of a student with marks 70.
+var indexOfStudent = students.FindIndex(x => x.Marks == 70);
+
+//39.Chunk students into groups of 2.
+var chunks = students.Select((s, i) => new {s, Index = i}).GroupBy(x => x.Index/2).Select(g => g.Select(x => x.s).ToList()).ToList();
+
+//40.Flatten a list of lists.
+List<List<int>> nested = new() { new() { 1, 2 }, new() { 3, 4 } };
+var flat = nested.SelectMany(x => x).ToList();
+
+//✅ Level 5: Miscellaneous & Tricky(41–50)
+
+var res = 10;
