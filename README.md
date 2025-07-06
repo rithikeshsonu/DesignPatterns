@@ -11,6 +11,28 @@ This repository includes the **Object-Oriented Principles**, **SOLID Design Prin
 
 ---
 
+## LINQ (Language Integrated Query)
+
+LINQ (Language Integrated Query) is a powerful feature in C# that allows querying collections in a SQL-like manner.  
+It provides a consistent model for working with data across various kinds of data sources and formats (arrays, lists, XML, databases, etc.).
+
+This project includes LINQ examples that demonstrate:
+
+- Filtering elements using `Where`
+- Projecting values using `Select`
+- Finding elements using `First`, `Any`, `All`
+- Aggregating data using `Sum`, `Count`, `Min`, `Max`
+- Sorting with `OrderBy`, `OrderByDescending`
+- Working with strings and performing grouping
+- Eliminating duplicates using `Distinct`
+
+📁 **Folder Path**:  
+`OopAndDesignPatterns/OOPPrinciples/LINQ/LINQ/Program.cs`
+
+🔗 **[Click here to view the LINQ code file](https://github.com/rithikeshsonu/DesignPatterns/blob/main/OopAndDesignPatterns/OOPPrinciples/LINQ/LINQ/Program.cs)**
+
+---
+
 ## SOLID Principles
 1. **Single Responsibility Principle**  
    A class should have one and only one reason to change.  
