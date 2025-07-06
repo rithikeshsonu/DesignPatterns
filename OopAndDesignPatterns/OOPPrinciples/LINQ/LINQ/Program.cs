@@ -1,0 +1,11 @@
+﻿int[] numbers = [1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 9, 10];
+var evens = numbers.Where(x => x % 2 == 0).ToList();
+var greaterThan5 = numbers.Where(x => x > 5);
+var squares = numbers.Select(x => x * x);
+var maximumNumber = numbers.Max();
+var minimumNumber = numbers.Min();
+var sumOfAllNumbers = numbers.Sum();
+var countNumsGreaterThan5 = numbers.Count(x => x > 5);
+var ascending = numbers.Order();
+var descending = numbers.OrderByDescending(x => x);
+var unique = numbers.Distinct().ToList();
