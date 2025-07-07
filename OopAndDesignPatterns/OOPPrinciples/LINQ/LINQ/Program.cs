@@ -1,7 +1,7 @@
 ﻿using LINQ;
 
 int[] numbers = [1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 9, 10];
-var evens = numbers.Where(x => x % 2 == 0).ToList();
+List<int> evens = numbers.Where(x => x % 2 == 0).ToList();
 var greaterThan5 = numbers.Where(x => x > 5);
 var squares = numbers.Select(x => x * x);
 var maximumNumber = numbers.Max();
@@ -164,4 +164,43 @@ var duplicateNames = names.GroupBy(n => n)
                             .Select(x => x.Key)
                             .ToList();
 
-var res = 2;
+List<Employee> employees = new()
+{
+    new Employee { Id = 1, Name = "Amit", Department = "IT", City = "Mumbai", Salary = 75000, JoinDate = DateTime.Now.AddDays(-90) },
+    new Employee { Id = 2, Name = "Priya", Department = "HR", City = "Delhi", Salary = 60000, JoinDate = DateTime.Now.AddDays(-30) },
+    new Employee { Id = 3, Name = "Raj", Department = "IT", City = "Mumbai", Salary = 85000, JoinDate = DateTime.Now.AddDays(-15) },
+    new Employee { Id = 4, Name = "Sonal", Department = "Finance", City = "Pune", Salary = 70000, JoinDate = DateTime.Now.AddDays(-45) },
+    new Employee { Id = 5, Name = "John", Department = "IT", City = "Bangalore", Salary = 92000, JoinDate = DateTime.Now.AddDays(-120) },
+    new Employee { Id = 6, Name = "Meena", Department = "HR", City = "Delhi", Salary = 64000, JoinDate = DateTime.Now.AddDays(-75) },
+    new Employee { Id = 7, Name = "Ali", Department = "Finance", City = "Chennai", Salary = 72000, JoinDate = DateTime.Now.AddDays(-10) },
+    new Employee { Id = 8, Name = "Ravi", Department = "Sales", City = "Pune", Salary = 55000, JoinDate = DateTime.Now.AddDays(-5) },
+    new Employee { Id = 9, Name = "Neha", Department = "Sales", City = "Bangalore", Salary = 58000, JoinDate = DateTime.Now.AddDays(-60) },
+    new Employee { Id = 10, Name = "Sara", Department = "IT", City = "Hyderabad", Salary = 80000, JoinDate = DateTime.Now.AddDays(-20) }
+};
+
+//🔸 2.Return departments with more than 3 employees
+var departmentsWithMoreThan3Employees = employees.GroupBy(x => x.Department).Where(g => g.Count() > 3).ToList();
+
+//🔸 4.Find top N earners from employee list
+var top4Earners = employees.OrderByDescending(x => x.Salary).Take(4).ToList();
+
+//🔸 8.Retrieve employees with the 2nd highest salary
+var employeeWith2ndHighestSalary = employees.OrderByDescending(x => x.Salary).Skip(1).Select(x => x.Name).First();
+
+//🔸 15.Get names of employees joined in last 30 days
+var employeesJoinedInLast30Days = employees.Where(x => (DateTime.Now - x.JoinDate).Days <= 30).ToList();
+
+//🔸 18.From list of employees, find the department with the highest average salary
+var departmentWithHighestSalary = employees.GroupBy(x => x.Department)
+                                           .Select(g => new
+                                            {   
+                                                Department = g.Key,
+                                                AvgSalary = g.Average(e => e.Salary),
+                                            })
+                                           .OrderByDescending(x => x.AvgSalary).First();
+
+//🔸 19.Get employee names starting with a vowel
+var employeeNamesStartingWithVowel = employees.Where(x => "AEIOUaeiou".Contains(x.Name[0])).ToList();
+
+//🔸 20.Find the most common city employees belong to
+var mostCommonCityInEmployees = employees.GroupBy(x => x.City).OrderByDescending(x => x.Count()).FirstOrDefault()?.Key;
