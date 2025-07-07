@@ -1,4 +1,8 @@
 ﻿//✅ Question 1: Find the Maximum Element in an Array
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Runtime.Intrinsics.X86;
+
 int FindMaxNum(int[] arr)
 {
     int max = -1;
@@ -272,3 +276,115 @@ void LeftRotateByDOptimal(int[] arr, int d)
     Reverse(arr, 0, n - 1);
 }
 LeftRotateByDOptimal([1, 2, 3, 4, 5], 3);
+
+//✅ Question 14: Maximum Sum Subarray of Size K
+
+//✅ Question 16: Compute Prefix Sum of an Array
+//❓ Given an array, create a new array where each element at index i is the sum of elements from 0 to i of the original array.
+
+//Example:
+//Input: [2, 4, 6, 8]
+//Output: [2, 6, 12, 20]
+
+int[] PrefixSumNaive(int[] nums) // 2, 4, 6, 8
+{
+    int[] prefixSum = new int[nums.Length];
+    for(int i = 0; i < nums.Length; i++)
+    {
+        int sum = 0;
+        for(int j = 0; j <=i; j++)
+        {
+            sum += nums[j];
+        }
+        prefixSum[i] = sum;
+    }
+    return prefixSum;
+}
+PrefixSumNaive([2, 4, 6, 8]);
+
+int[] PrefixSumOptimal(int[] nums)
+{
+    int[] prefixSum = new int[nums.Length];
+    prefixSum[0] = nums[0];
+    for(int i = 1; i < nums.Length; i++)
+    {
+        prefixSum[i] = prefixSum[i - 1] + nums[i];
+    }
+    return prefixSum;
+}
+PrefixSumOptimal([2, 4, 6, 8]);
+
+//✅ Question 17: Move All Zeros to the End (Maintain Order)
+//❓ Move all zeros in the array to the end, while keeping the order of non-zero elements the same.
+
+//Example:
+//Input: [1, 0, 2, 0, 3]
+//Output: [1, 2, 3, 0, 0]
+
+//🔁 Naive Approach — Step-by-Step:
+//Create a new array or list.
+
+//First insert all non-zero elements.
+
+//Then add zeroes at the end.
+
+int[] MoveAllZeroesNaive(int[] arr)
+{
+    List<int> result = new();
+    int zeroesCount = 0;
+    foreach(var item in arr)
+    {
+        if(item != 0)
+        {
+            result.Add(item);
+        }
+        else
+        {
+            zeroesCount++;
+        }
+    }
+    while(zeroesCount > 0)
+    {
+        result.Add(0);
+        zeroesCount--;
+    }
+    return result.ToArray();
+}
+MoveAllZeroesNaive([1, 0, 3, 4, 0, 5, 0, 0, 8]);
+
+//⚡ Optimal Approach — Step-by-Step (In-place):
+//Use a pointer j to track the next position to insert a non-zero.
+
+//Loop through the array:
+
+//If the current element is non-zero, assign it to arr[j++]
+
+//After placing non-zero elements, fill the rest with zeros.
+void MoveAllZeroesOptimal(int[] arr)
+{
+    int j = 0;
+    for(int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] != 0)
+           arr[j++] = arr[i];
+    }
+    while(j < arr.Length)
+        arr[j++] = 0;
+}
+MoveAllZeroesOptimal([1, 0, 3, 4, 0, 5, 0, 0, 8]);
+
+//✅ Question 19: Two Sum Problem
+//❓ Given an array and a target, return indices of two elements that add up to the target.
+
+(int, int) TwoSumNaive(int[] arr, int target)
+{ 
+    for(int i = 0; i < arr.Length; i++)
+    {
+        for(int j = i + 1; j < arr.Length; j++)
+        {
+            if (arr[i] + arr[j] == target) return (i, j);
+        }
+    }
+    return (-1, -1);
+}
+Console.WriteLine(TwoSumNaive([2, 1, 4, 5, 9], 23));
