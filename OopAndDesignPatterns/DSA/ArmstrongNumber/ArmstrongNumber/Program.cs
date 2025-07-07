@@ -1,8 +1,6 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 void IsArmstrongNumber(int num)
 {
@@ -57,15 +55,14 @@ string ReverseString(string input) //Convert string to char array
     }
     return new string(reversed);
 }
-string revv = ReverseString("xerexi");
-Console.WriteLine(revv);
+Console.WriteLine(ReverseString("xerexi"));
 
-string ReverseStringg(string str) //Recursion
+string ReverseStringUsingRecursion(string str) //Recursion
 {
     if(str.Length <= 1) return str;
-    return str[str.Length - 1] + ReverseStringg(str.Substring(0, str.Length - 1)); //Recursive call
+    return str[str.Length - 1] + ReverseStringUsingRecursion(str.Substring(0, str.Length - 1)); //Recursive call
 }
-Console.WriteLine(ReverseStringg("qwerty"));
+Console.WriteLine(ReverseStringUsingRecursion("qwerty"));
 
 //✅ Question #11: Check if a String is a Palindrome
 bool IsStringPalindrome(string input) //Fetch indices(left and right) 0, 4
@@ -469,3 +466,48 @@ bool AreStringsPermutationsOptimal(string s1, string s2)
     return true;
 }
 Console.WriteLine(AreStringsPermutationsOptimal("abcg", "bcat"));
+
+
+//✅ Question #16: Check if Two Strings Are One Edit Apart
+//🔍 Problem Statement:
+//Two strings are one edit away if you can:
+
+//Insert one character
+
+//Remove one character
+
+//Replace one character
+
+//to make them equal.
+//Input: s1 = "pale", s2 = "ple"   → true(remove 'a')
+//Input: s1 = "pales", s2 = "pale" → true(remove 's')
+//Input: s1 = "pale", s2 = "bale"  → true(replace 'p' with 'b')
+//Input: s1 = "pale", s2 = "bake"  → false(more than one edit)
+bool IsOneEditAwayNaive(string s1, string s2)
+{
+    if(s1 == s2) return true;
+    if(Math.Abs(s1.Length - s2.Length) > 1) 
+        return false;
+    //If length matches
+    if(s1.Length == s2.Length)
+    {
+        int mismatches = 0;
+        for(int i = 0; i < s1.Length ; i++)
+        {
+            if (s1[i] != s2[i]) 
+                mismatches++;
+        }
+        return mismatches == 1;
+    }
+    //If lengths doesn't match
+    string longer = s1.Length > s2.Length ? s1 : s2;
+    string shorter = s1.Length > s2.Length ? s2 : s1;
+    for(int i = 0; i < longer.Length ; i++)
+    {
+        string modified = longer.Remove(i, 1); //
+        if(modified == shorter) 
+            return true;
+    }
+    return false;
+}
+Console.WriteLine(IsOneEditAwayNaive("pale", "pal"));
