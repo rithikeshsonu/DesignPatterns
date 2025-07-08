@@ -79,3 +79,106 @@ int GCD(int a, int b) //10, 15
     return gcd;
 }
 GCD(10, 15);
+
+//✅ Problem 5: Count Digits that Divide the Number
+int CountDigitsDividingNumber(int num) //1022 -> 3
+{
+    int rem, count = 0, original = num;
+    while(num > 0) //122 //TC - O(Log N)
+    {
+        rem = num % 10; //2 2 1
+        if(rem!= 0 && original % rem == 0) count++;
+        num /= 10; //12 1
+    }
+    return count;
+}
+CountDigitsDividingNumber(1022);
+
+//✅ Problem 7: Find Factorial of a Number
+long FactorialNaive(int n)
+{
+    long result = 1;
+    for(int i = 2; i <= n; i++) //TC -> O(N)
+    {
+        result *= i;
+    }
+    return result;
+}
+FactorialNaive(5);
+
+long FactorialRecursion(int n)
+{
+    if (n <= 1) return 1;
+    return n * FactorialRecursion(n - 1); //5 * Factorial(4) -> 5 * 4 * 3 * 2 
+}
+Console.WriteLine(FactorialRecursion(5));
+
+//✅ Problem 8: Count Trailing Zeroes in Factorial
+int CountTrailingZeroes(int n) //Math involved
+{
+    int count = 0;
+    for(int i = 5; n/i >= 1; i *= 5)
+    {
+        count += n / i;
+    }
+    return count;
+}
+
+Console.WriteLine(CountTrailingZeroes(5));
+
+//✅ Problem 9: Check if a Number is Power of 2
+bool IsNumberPowerOf2Naive(int n) //16
+{
+    if (n < 1) return false;
+    while (n % 2 == 0)
+        n /= 2; //8
+    return n == 1;
+}
+
+IsNumberPowerOf2Naive(112);
+
+//✅ Problem 11: Sum of Digits of a Number
+long SumOfDigits(int num) //123 -> 6
+{
+    long sum = 0, rem;
+    while(num > 0)
+    {
+        rem = num % 10; // 3 2
+        sum += rem; //3 +
+        num /= 10; //12
+    }
+    return sum;
+}
+SumOfDigits(123);
+
+//✅ Problem 12: Product of Digits of a Number
+long ProductOfDigits(int num)
+{
+    long product = 1; int rem;
+    while(num > 0)
+    {
+        rem = num % 10;
+        product *= rem;
+        num /= 10;
+    }
+    return product;
+}
+ProductOfDigits(1234);
+
+//✅ Problem 13: Sum of Digits Until One Digit (Digital Root)
+int SumOfDigitsUntil1Digit(int num) //9867
+{
+    while(num >= 10) //9867
+    {
+        int sum = 0, rem;
+        while (num > 0)
+        {
+            rem = num % 10;
+            sum += rem;
+            num /= 10;
+        }
+        num = sum;
+    }
+    return num;
+}
+Console.WriteLine(SumOfDigitsUntil1Digit(98687));
