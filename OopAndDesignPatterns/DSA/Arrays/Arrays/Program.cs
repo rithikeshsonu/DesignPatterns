@@ -1,8 +1,4 @@
 ﻿//✅ Question 1: Find the Maximum Element in an Array
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Runtime.Intrinsics.X86;
-
 int FindMaxNum(int[] arr)
 {
     int max = -1;
@@ -388,3 +384,215 @@ MoveAllZeroesOptimal([1, 0, 3, 4, 0, 5, 0, 0, 8]);
     return (-1, -1);
 }
 Console.WriteLine(TwoSumNaive([2, 1, 4, 5, 9], 23));
+
+//TWO POINTERS QUESTIONS
+//✅ Problem 1: Check if Array Has a Pair with Given Sum (Sorted Array)
+//❓ Problem
+//Given a sorted array and a target sum, return true if a pair exists such that arr[i] + arr[j] == target.
+
+//Example:
+//Input: arr = [1, 2, 3, 4, 6], target = 7
+//Output: true (1 + 6 or 3 + 4)
+
+
+bool HasPairWithSumNaive(int[] arr, int target) //[1, 2, 3, 4, 6]
+{
+    for(int i = 0; i < arr.Length; i++)
+    {
+        for(int j = i + 1; j < arr.Length; j++)
+        {
+            if (arr[i] + arr[j] == target)
+                return true;
+        }
+    }
+    return false;
+}
+Console.WriteLine(HasPairWithSumNaive([1, 2, 3, 4, 6], 12));
+
+//⚡ Two Pointers Approach
+//Step-by-Step:
+//Use two pointers left = 0, right = arr.Length - 1.
+//While left < right:
+//Compute sum = arr[left] + arr[right]
+//If sum == target: return true
+//If sum<target: move left++
+//If sum > target: move right--
+
+bool HasPairWithSumOptimal(int[] arr, int target) //[1, 2, 3, 4, 6], target = 8  (Sorted Array)
+{
+    int left = 0, right = arr.Length - 1;
+    while (left < right)     //✅ Time: O(n), Space: O(1)
+    {
+        if (arr[left] + arr[right] == target) return true;
+        else if (arr[left] + arr[right] > target) right--;
+        else if (arr[left] + arr[right] < target) left++;
+    }
+    return false;
+}
+Console.WriteLine(HasPairWithSumOptimal([1, 2, 3, 4, 6], 23));
+
+//✅ Problem 2: Reverse an Array In-Place
+//❓ Problem
+//Reverse the array without using extra space.
+
+//Example:
+//Input: [1, 2, 3, 4] → Output: [4, 3, 2, 1]
+
+//⚡ Two Pointers Approach
+//Step-by-Step:
+//Set left = 0, right = arr.Length - 1.
+
+//While left < right:
+
+//Swap arr[left] and arr[right].
+
+//Increment left, decrement right.
+
+void ReverseArrayInPlaceOptimal(int[] arr) //[1, 2, 3, 4] -> [4, 3, 2, 1]
+{
+    int left = 0, right = arr.Length - 1;
+    while(left < right) //✅ Time: O(n/2), Space: O(1)
+    {
+        (arr[left], arr[right]) = (arr[right], arr[left]);
+        left++;
+        right--;
+    }
+}
+ReverseArrayInPlaceOptimal([1, 2, 5, 3, 4]);
+
+//✅ Problem 4: Merge Two Sorted Arrays
+//❓ Problem
+//Given two sorted arrays, merge them into one sorted array.
+
+//Example:
+//a = [1, 3, 5], b = [2, 4, 6] → [1,2,3,4,5,6]
+
+int[] MergeSortedArraysNaive(int[] arr1, int[] arr2)
+{
+    int[] combined = arr1.Concat(arr2).ToArray();
+    Array.Sort(combined);
+    return combined;
+}
+Console.WriteLine(MergeSortedArraysNaive([1, 3, 5], [2, 4, 6]));
+
+int[] MergeSortedArrayOptimal(int[] a, int[] b)
+{
+    List<int> combined = new();
+    int i = 0, j = 0;
+    while(i < a.Length && j < b.Length)
+    {
+        if (a[i] < b[j])
+            combined.Add(a[i++]);
+        else
+            combined.Add(b[j++]);
+    }
+    while(i < a.Length)
+        combined.Add(a[i++]);
+    while(j < b.Length)
+        combined.Add(b[j++]);
+    return combined.ToArray();
+}
+MergeSortedArrayOptimal([1, 3, 5], [1, 2, 3, 4,5]);
+
+//✅ Problem 5: Remove Duplicates from Sorted Array
+//❓ Problem
+//Remove duplicates in-place from a sorted array and return new length.
+
+//✅ Problem 6: Move Negative Elements to the Beginning and Positive to the End (Maintain Order Not Required)
+
+//❓ Problem
+//Given an array with both negative and positive numbers, rearrange the array so that all negative numbers come before positives. Order does not matter.
+
+//Example:
+//Input: [1, -2, 3, -4, -5, 6]
+//Output: [-5, -4, -2, 3, 1, 6] (any order with negatives first)
+void ReArrangeNaive(int[] arr)
+{
+    List<int> negatives = new();
+    List<int> positives = new();
+    foreach(int item in arr)
+    {
+        if(item < 0) negatives.Add(item);
+        else positives.Add(item);
+    }
+    int i = 0;
+    foreach(int num in negatives) arr[i++] = num;
+    foreach(int num in positives) arr[i++] = num;
+}
+ReArrangeNaive([1, -2, 3, -4, -5, 6]);
+
+void ReArrangeOptimal(int[] arr) //[1, -2, 3, -4, 7, -4, -5, 6]
+{
+    int left = 0, right = arr.Length - 1;
+    while(left < right)
+    {
+        if (arr[left] < 0)
+            left++;
+        else if (arr[right] >= 0)
+            right--;
+        else
+        {
+            (arr[left], arr[right]) = (arr[right], arr[left]);
+            left++;
+            right--;
+        }
+    }
+}
+ReArrangeOptimal([1, -2, 3, -4, 7, -4, -5, 6]);
+
+//✅ Problem 7: Container With Most Water
+//❓ Problem
+//You are given n non-negative integers representing vertical lines. Find two lines that together with the x-axis form a container that holds the maximum water.
+
+//Example:
+//Input: [1, 8, 6, 2, 5, 4, 8, 3, 7]
+//Output: 49
+
+//🔁 Naive Approach
+//Step-by-Step:
+//Try all pairs (i, j) where i < j.
+
+//Area = min(height[i], height[j]) *(j - i)
+
+//Track the max area.
+
+int MaxAreaNaive(int[] height)
+{
+    int maxArea = 0;
+    for(int i = 0; i < height.Length; i++)
+    {
+        for(int j = i + 1; j < height.Length; j++)
+        {
+            int area = Math.Min(height[i], height[j]) * (j - i); //length * breadth OR side * side length = number; breadth = difference between indices
+            maxArea = Math.Max(maxArea, area);
+        }
+    }
+    return maxArea;
+}
+MaxAreaNaive([1, 8, 6, 2, 5, 4, 8, 3, 7]);
+
+//⚡ Two Pointers Approach
+//Step-by-Step:
+//Use left = 0, right = n - 1.
+
+//At each step, calculate area = min(height[left], height[right]) *(right - left).
+
+//Move the pointer pointing to the shorter line (to possibly find a taller one).
+
+int MaxAreaOptimal(int[] height) //[1, 8, 6, 2, 5, 4, 8, 3, 7]
+{
+    int left = 0, right = height.Length - 1;
+    int maxArea = 0;
+    while(left < right)
+    {
+        int area = Math.Min(height[left], height[right]) * (right - left);
+        maxArea = Math.Max(area, maxArea);
+
+        if (height[left] < height[right])
+            left++;
+        else
+            right--;
+    }
+    return maxArea;
+}
+Console.WriteLine(MaxAreaOptimal([1, 8, 6, 2, 5, 4, 8, 3, 7]));
