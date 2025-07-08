@@ -40,8 +40,32 @@ JOIN Visits v ON d.DoctorID = v.DoctorID
 GROUP BY d.Name;
 
 --7. List all diagnoses made by Dr. Smith.
+SELECT v.Diagnosis FROM
+Doctors d 
+JOIN Visits v ON d.DoctorID = v.DoctorID
+WHERE d.Name = 'Dr. Smith'
+
+--8. Which patient has the highest number of visits?
+SELECT TOP 1 p.name, COUNT(v.VisitID) AS VisitCount FROM
+Patients p
+JOIN Visits v ON p.patientId = v.patientid
+GROUP BY p.name
+ORDER BY VisitCount DESC
+
+--9. Find doctors who never treated patient 'Bob'.
+SELECT Name
+FROM Doctors d
+WHERE DoctorID NOT IN(
+	SELECT DISTINCT DoctorId 
+	FROM Visits 
+	where patientId = (SELECT PatientID FROM Patients WHERE [Name] = 'Bob')
+);
+
 SELECT * FROM Patients;
-SELECT * FROM Doctors;
 SELECT * FROM Visits;
+SELECT * FROM Doctors;
 SELECT * FROM Patients p JOIN Visits v on p.PatientID = v.PatientID
 JOIN Doctors d on d.DoctorID = v.DoctorID;
+
+SELECT * FROM Patients p
+JOIN Visits v on p.PatientID = v.PatientID
