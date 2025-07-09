@@ -9,6 +9,6 @@ namespace LINQ
     public class ClassInfo
     {
         public int StudentId { get; set; }
-        public string ClassName { get; set; }
+        public string ClassName { get; set; } = string.Empty;
     }
 }

@@ -203,4 +203,104 @@ var departmentWithHighestSalary = employees.GroupBy(x => x.Department)
 var employeeNamesStartingWithVowel = employees.Where(x => "AEIOUaeiou".Contains(x.Name[0])).ToList();
 
 //🔸 20.Find the most common city employees belong to
-var mostCommonCityInEmployees = employees.GroupBy(x => x.City).OrderByDescending(x => x.Count()).FirstOrDefault()?.Key;
+var mostCommonCityInEmployees = employees
+                            .GroupBy(x => x.City)
+                            .OrderByDescending(x => x.Count())
+                            .FirstOrDefault()?.Key;
+
+
+//✅ Practical LINQ Questions with Answers
+//🔸 1.Get names of employees in 'IT' department, ordered by salary descending
+var namesOfEmployeesInITDept = employees.Where(x => x.Department == "IT").OrderByDescending(x => x.Salary).Select(x => x.Name).ToList();
+
+//🔸 2.Find the average salary of employees in each department
+var averageSalaryInEachDept = employees.GroupBy(x => x.Department).Select(g => new
+{
+    Department = g.Key,
+    AverageSalary = g.Average(a => a.Salary)
+}).ToList();
+
+//🔸 3.Find employees who joined in the last 60 days
+var employeesJoinedInLast60Days = employees.Where(x => (DateTime.Now - x.JoinDate).Days <= 60).ToList();
+
+//🔸 4.Find the department with the highest number of employees
+var deptWithHighestNoOfEmployees = employees.GroupBy(x => x.Department).OrderByDescending(x => x.Count()).Select(g => new
+{
+    Department = g.Key,
+    Count = g.Count()
+}).First();
+
+//🔸 5.List all distinct departments
+var distinctDepartments = employees.Select(x => x.Department).Distinct().Order().ToList();
+
+//🔸 6.Check if any employee earns more than ₹90,000
+var employeeWithSalary90000 = employees.Where(x => x.Salary > 90000).Count() > 0;
+bool employeeWithSalary9000UsingAny = employees.Any(x => x.Salary > 90000);
+
+//🔸 7.Get the names of employees whose names start with 'S'
+var employeeNamesStartingWithS = employees.Where(e => e.Name.StartsWith('S')).Select(x => x.Name).ToList();
+
+//🔸 8.Group employees by city and count
+var employeesByCityAndCount = employees.GroupBy(x => x.City).Select(g => new
+{
+    City = g.Key,
+    Count = g.Count()
+}).ToList();
+
+
+//🔸 9.Find the employee(s) with the second highest salary
+var empWith2ndHighestSalary = employees.Select(x => x.Salary).OrderByDescending(x => x).Distinct().Skip(1).FirstOrDefault();
+var secondHighestSalariedEmployee = employees.Where(x => x.Salary == empWith2ndHighestSalary).ToList();
+
+//🔸 10.Find total salary paid in each city
+var totalSalaryInEachCity = employees.GroupBy(x => x.City).Select(g => new
+{
+    City = g.Key,
+    Salary = g.Sum(x => x.Salary),
+}).ToList();
+
+//🔸 11.Find employees whose salary is above average
+var averageSalary = employees.Average(x => x.Salary);
+var employeesWithSalaryAboveAverage = employees.Where(x => x.Salary > averageSalary).Select(x => x.Name). ToList();
+
+//🔸 12.Get employee count by department, only for departments with more than 1 employee
+var departmentsWithMoreThan1Employee = employees
+                                    .GroupBy(x => x.Department)
+                                    .Where(g => g.Count() > 1)
+                                    .Select(g => new{
+                                        Department = g.Key,
+                                        Count = g.Count()
+                                    })
+                                    .ToList();
+
+//🔸 13.Print employee names joined after Jan 22, 2025
+
+var employeesJoinedAfterJan12024 = employees.Where(x => x.JoinDate > new DateTime(2025, 1, 22)).Select(x=>x.Name).ToList();
+
+//🔸 14.Return the name of the most recent joinee
+var mostRecentJoinee = employees.OrderByDescending(x => x.JoinDate).Select(x => x.Name).FirstOrDefault();
+
+//🔸 15.Get a list of cities where no one from 'Finance' department is working
+var CitiesWithNoEmployeesInFinance = employees
+                                .Where(x => x.Department != "Finance")
+                                .Select(x => x.City)
+                                .Distinct()
+                                .ToList();
+
+
+//🔸 16.Display top 3 highest paid employees per department
+var top3HighestPaidPerDept = employees.GroupBy(x => x.Department).Select(g => new
+{
+    Dept = g.Key,
+    Emps = g.Take(3).OrderByDescending(x=>x.Salary).ToList(),
+}) .ToList();
+
+var top3HighestPaidPerDeptUsingSelectMany = employees
+                                            .GroupBy(x=> x.Department)
+                                            .SelectMany(g => g
+                                                .OrderByDescending(x => x.Salary)
+                                                .Take(3))
+                                            .ToList();
+
+//🔸 17.Create a dictionary of Department → List of Employees
+var deptDict = employees.GroupBy(x => x.Department).ToDictionary(g => g.Key, g => g.ToList());
