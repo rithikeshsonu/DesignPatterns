@@ -21,7 +21,7 @@ bool IsPalindromeOptimal(int num) //121
 }
 Console.WriteLine(IsPalindromeOptimal(122));
 
-//✅ Problem 2: Count the Number of Digits in a Number
+//✅ Problem 2: Count the Number of Digits in a Number .
 
 int CountDigitsNaive(int num) //121
 {
