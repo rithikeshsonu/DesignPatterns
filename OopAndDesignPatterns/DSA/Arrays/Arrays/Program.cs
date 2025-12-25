@@ -208,7 +208,7 @@ int RemoveDuplicatesNaive(int[] arr)
 
 Console.WriteLine(RemoveDuplicatesNaive([1, 2, 2, 3, 3, 4])); 
 
-int RemoveDuplicatesOptimal(int[] arr) // 1, 2, 2, 3, 3, 4 -> Two Pointers approach
+int RemoveDuplicatesOptimal(int[] arr) // 1, 2, 2, 3, 3, 4 -> Two Pointers approach // Check
 {
     if (arr.Length == 0) return 0;
     int i = 0;

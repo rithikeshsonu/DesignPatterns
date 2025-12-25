@@ -304,3 +304,41 @@ var top3HighestPaidPerDeptUsingSelectMany = employees
 
 //🔸 17.Create a dictionary of Department → List of Employees
 var deptDict = employees.GroupBy(x => x.Department).ToDictionary(g => g.Key, g => g.ToList());
+
+
+
+
+
+
+List<Employees> employeess = new()
+{
+    new Employees { Id = 1, Name = "Amit", DepartmentId = 1, Salary = 80000, JoinDate = DateTime.Now.AddYears(-2) },
+    new Employees { Id = 2, Name = "Neha", DepartmentId = 2, Salary = 60000, JoinDate = DateTime.Now.AddYears(-1) },
+    new Employees { Id = 3, Name = "Ravi", DepartmentId = 1, Salary = 90000, JoinDate = DateTime.Now.AddMonths(-6) },
+    new Employees { Id = 4, Name = "Sara", DepartmentId = 3, Salary = 70000, JoinDate = DateTime.Now.AddYears(-3) },
+    new Employees { Id = 5, Name = "John", DepartmentId = 1, Salary = 90000, JoinDate = DateTime.Now.AddMonths(-3) }
+};
+
+List<Departments> departments = new()
+{
+    new Departments { Id = 1, Name = "IT" },
+    new Departments { Id = 2, Name = "HR" },
+    new Departments { Id = 3, Name = "Finance" }
+};
+
+//Find highest paid employee in each department
+
+var highestPaid = employeess.GroupBy(e => e.DepartmentId)
+                            .Select(g => g.OrderByDescending(e => e.Salary))
+                            .FirstOrDefault();
+
+//Find departments having more than 1 employee
+var depts = departments.GroupBy(d => d.Id)
+    .Where(g => g.Count() > 1)
+    .Select(g => g.Key);
+
+//Find employees with duplicate salary
+var empsWithDupSal = employeess.GroupBy(e => e.Salary).Where(g => g.Count() > 1).SelectMany(g => g);
+
+//Find employees joined in last 1 year
+var empsJoinedInLast1Year = employeess.Where(e => e.JoinDate > DateTime.Now.AddYears(-1));
